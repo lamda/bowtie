@@ -10,7 +10,6 @@ import networkx as nx
 import matplotlib
 matplotlib.use('GTKAgg')
 import matplotlib.pyplot as plt
-import prettyplotlib as ppl
 
 
 # settings
@@ -32,7 +31,7 @@ class Graph(nx.DiGraph):
         """ calculate several statistical measures on the graphs"""
         # Core, In and Out
         cc = nx.strongly_connected_components(self)
-        lc = self.subgraph(cc[0])
+        lc = self.subgraph(cc.next())
         scc = set(lc.nodes())
         scc_node = random.sample(scc, 1)[0]
         sp = nx.all_pairs_shortest_path_length(self)
@@ -107,7 +106,8 @@ class Plotting(object):
     def __init__(self, graphs):
         self.graphs = graphs
         self.styles = ['solid', 'dashed']
-        self.colors = ppl.set2
+        self.colors = ['#66C2A5', '#FC8D62', '#8DA0CB',
+                       '#E78AC3', '#A6D854', '#FFD92F', '#E5C494']
         self.stackplot()
         self.alluvial()
 
@@ -120,7 +120,8 @@ class Plotting(object):
             data = [graph.bow_tie for graph in gc]
             polys = axes[0, i].stackplot(np.arange(1, 1 + len(data)),
                                          np.transpose(np.array(data)),
-                                         baseline='zero', edgecolor='face')
+                                         baseline='zero', edgecolor='face',
+                                         colors=self.colors)
             legend_proxies = [plt.Rectangle((0, 0), 1, 1,
                               fc=p.get_facecolor()[0])
                               for p in polys]
