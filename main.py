@@ -8,7 +8,7 @@ import pdb
 import numpy as np
 import networkx as nx
 import matplotlib
-matplotlib.use('GTKAgg')
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
